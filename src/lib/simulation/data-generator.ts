@@ -18,7 +18,7 @@ import type {
   MatchEvent,
   IoTSensorData,
 } from './types';
-import { getTournamentContext } from './schedule';
+import { getTournamentContext, type TournamentContext } from './schedule';
 
 /* ── Helpers ── */
 
@@ -82,7 +82,7 @@ let scoreA = 0;
 let scoreB = 0;
 const matchEvents: MatchEvent[] = [];
 
-function evolveMatch(prev: MatchInfo, context: any): MatchInfo {
+function evolveMatch(prev: MatchInfo, context: TournamentContext): MatchInfo {
   const activeMatch = context.currentMatch || context.nextMatch;
   const teamA = activeMatch?.teamA || 'TBD';
   const teamB = activeMatch?.teamB || 'TBD';
@@ -151,7 +151,7 @@ function evolveMatch(prev: MatchInfo, context: any): MatchInfo {
     minute: matchMinute,
     status,
     attendance: context.stadiumMode === 'live' ? rand(78000, 82000) : rand(10000, 42000),
-    maxCapacity: context.venue.capacity || 85000,
+    maxCapacity: context.venue?.capacity || 85000,
     events: matchEvents.slice(-10),
   };
 }
@@ -391,7 +391,7 @@ export function generateStadiumData(): StadiumData {
     transport,
     iot,
     totalInStadium,
-    maxCapacity: context.venue.capacity,
+    maxCapacity: context.venue?.capacity || 85000,
     tournamentContext: context,
   };
 

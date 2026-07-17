@@ -39,18 +39,18 @@ Respond naturally and helpfully.`;
     const response = await generateText(FAN_COMPANION_PROMPT, contextPrompt);
 
     return NextResponse.json({ response });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Fan Companion AI error:', error);
     let availableModels = '';
     try {
       const ai = getGeminiClient();
-      const models = await (ai.models as any).listModels();
-      availableModels = (models as any).map?.((m: any) => m.name).join(', ') || 'could not list';
+      const models = await (ai.models as unknown as { listModels: () => Promise<Array<{name: string}>> }).listModels();
+      availableModels = models.map((m: { name: string }) => m.name).join(', ') || 'could not list';
     } catch (e) {
       availableModels = 'failed to fetch models';
     }
     return NextResponse.json(
-      { error: 'AI response failed', response: `Error: ${error.message}. Available models: ${availableModels}` },
+      { error: 'AI response failed', response: `Error: ${(error as Error).message}. Available models: ${availableModels}` },
       { status: 500 }
     );
   }

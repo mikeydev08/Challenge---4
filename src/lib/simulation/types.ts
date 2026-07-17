@@ -135,6 +135,8 @@ export interface IoTSensorData {
   lightLevel: number;     // lux
 }
 
+import type { TournamentContext } from './schedule';
+
 export interface StadiumData {
   timestamp: string;
   match: MatchInfo;
@@ -150,7 +152,7 @@ export interface StadiumData {
   iot: IoTSensorData[];
   totalInStadium: number;
   maxCapacity: number;
-  tournamentContext?: any; // Avoiding circular dependency with schedule.ts
+  tournamentContext?: TournamentContext;
 }
 
 /* ── Fan profile types ── */

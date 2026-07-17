@@ -33,10 +33,10 @@ export async function POST(request: NextRequest) {
     );
 
     return NextResponse.json(response);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Announcement AI error:', error);
     return NextResponse.json(
-      { error: 'Translation failed' },
+      { error: 'Translation failed', message: (error as Error).message },
       { status: 500 }
     );
   }

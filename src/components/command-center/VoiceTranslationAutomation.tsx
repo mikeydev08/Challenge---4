@@ -67,7 +67,7 @@ export function VoiceTranslationAutomation() {
         utterance.lang = lang;
         
         // Prevent GC bug in Chrome by attaching to window temporarily
-        (window as any)._currentUtterance = utterance;
+        (window as unknown as { _currentUtterance: SpeechSynthesisUtterance })._currentUtterance = utterance;
         
         utterance.onend = () => {
           setBroadcasting(null);

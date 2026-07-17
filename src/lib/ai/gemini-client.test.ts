@@ -29,6 +29,6 @@ describe('gemini-client', () => {
     const client = mod.getGeminiClient();
     expect(client).toBeDefined();
     expect(mod.GEMINI_MODEL).toBe('gemini-2.5-flash');
-    expect((client as any)._config.apiKey).toBe('test-api-key');
+    expect((client as unknown as { _config: { apiKey: string } })._config.apiKey).toBe('test-api-key');
   });
 });

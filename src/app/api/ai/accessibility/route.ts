@@ -35,10 +35,10 @@ Provide assistance based on the request type and user's accessibility needs.`;
     const response = await generateText(ACCESSIBILITY_PROMPT, userPrompt);
 
     return NextResponse.json({ response });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Accessibility AI error:', error);
     return NextResponse.json(
-      { error: 'AI response failed' },
+      { error: 'AI response failed', response: `Error: ${(error as Error).message}` },
       { status: 500 }
     );
   }
