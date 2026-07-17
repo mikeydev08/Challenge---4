@@ -4,6 +4,8 @@
 
 > Powered by **Google Gemini 2.5** • Built for the **Prompt Wars Hackathon**
 
+🌐 **Live Demo:** [https://challenge-4-delta.vercel.app/](https://challenge-4-delta.vercel.app/)
+
 ---
 
 ## 🎯 Overview
