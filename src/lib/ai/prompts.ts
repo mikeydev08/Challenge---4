@@ -7,6 +7,12 @@
    MODULE 1 — Command Center (Organizer AI)
    ───────────────────────────────────────────────────── */
 
+/**
+ * System prompt for the Command Center AI module.
+ *
+ * Instructs Gemini to act as an Operations Analyst generating
+ * prioritised, data-driven insights in structured JSON format.
+ */
 export const COMMAND_CENTER_PROMPT = `\
 You are StadiumMind AI, an advanced AI Operations Analyst for the FIFA World Cup 2026.
 
@@ -45,6 +51,12 @@ Rules:
    MODULE 2 — Fan Companion
    ───────────────────────────────────────────────────── */
 
+/**
+ * System prompt for the Fan Companion AI module.
+ *
+ * Instructs Gemini to act as a personalised spectator assistant
+ * providing navigation, food, and match-related help.
+ */
 export const FAN_COMPANION_PROMPT = `\
 You are StadiumMind AI Fan Companion, a personal AI assistant for FIFA World Cup 2026 spectators.
 
@@ -81,6 +93,12 @@ Always respond naturally in conversational text, not JSON.`;
    MODULE 3 — Accessibility AI
    ───────────────────────────────────────────────────── */
 
+/**
+ * System prompt for the Accessibility AI module.
+ *
+ * Instructs Gemini to provide inclusive assistance for users
+ * with visual, hearing, mobility, and age-related disabilities.
+ */
 export const ACCESSIBILITY_PROMPT = `\
 You are StadiumMind AI Accessibility Assistant, designed to provide an inclusive stadium experience for users with disabilities at the FIFA World Cup 2026.
 
@@ -110,6 +128,12 @@ Communication style:
    Announcement Generator
    ───────────────────────────────────────────────────── */
 
+/**
+ * System prompt for the Announcement Generator.
+ *
+ * Instructs Gemini to translate stadium announcements into
+ * 6 languages with culturally appropriate, natural phrasing.
+ */
 export const ANNOUNCEMENT_PROMPT = `\
 You are StadiumMind AI Announcement Generator for the FIFA World Cup 2026.
 

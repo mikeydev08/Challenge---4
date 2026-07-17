@@ -1,6 +1,8 @@
 /* ═══════════════════════════════════════════════════════
    StadiumMind AI — Real-Time Data Generator
    Produces realistic, fluctuating stadium data for demo.
+   Uses drift-based evolution to create smooth, realistic
+   transitions between consecutive simulation snapshots.
    ═══════════════════════════════════════════════════════ */
 
 import type {
@@ -156,8 +158,39 @@ function evolveMatch(prev: MatchInfo, context: TournamentContext): MatchInfo {
   };
 }
 
+/* ═══════════════════════════════════════════════════════
+   Gate queue thresholds for status classification.
+   ═══════════════════════════════════════════════════════ */
+
+/** Queue length threshold above which a gate is marked 'critical'. */
+const GATE_CRITICAL_THRESHOLD = 350;
+
+/** Queue length threshold above which a gate is marked 'busy'. */
+const GATE_BUSY_THRESHOLD = 200;
+
+/** Queue length threshold above which a food stall is marked 'busy'. */
+const FOOD_BUSY_THRESHOLD = 40;
+
+/** Washroom occupancy fraction above which status is 'busy'. */
+const WASHROOM_BUSY_FRACTION = 0.7;
+
+/** Temperature threshold (°C) for heat advisory activation. */
+const HEAT_ADVISORY_TEMP = 38;
+
+/** Feels-like threshold (°C) for heat advisory activation. */
+const HEAT_ADVISORY_FEELS_LIKE = 42;
+
 /* ── Generate full snapshot ── */
 
+/**
+ * Generates a complete stadium data snapshot.
+ *
+ * Each call produces a new snapshot that smoothly evolves from
+ * the previous one (drift-based), creating realistic data streams
+ * for the SSE-powered dashboard.
+ *
+ * @returns A full {@link StadiumData} snapshot with all data streams.
+ */
 export function generateStadiumData(): StadiumData {
   const now = new Date().toISOString();
   const prev = _prev;
@@ -195,7 +228,7 @@ export function generateStadiumData(): StadiumData {
       scanRate,
       queueLength,
       capacity: 150,
-      status: queueLength > 350 ? 'critical' : queueLength > 200 ? 'busy' : 'normal',
+      status: queueLength > GATE_CRITICAL_THRESHOLD ? 'critical' : queueLength > GATE_BUSY_THRESHOLD ? 'busy' : 'normal',
     };
   });
 
@@ -231,7 +264,7 @@ export function generateStadiumData(): StadiumData {
       cuisine: s.cuisine,
       queueLength: q,
       estimatedWaitMinutes: Math.round(q * 1.5),
-      status: q > 40 ? 'busy' : q > 0 ? 'open' : 'closed',
+      status: q > FOOD_BUSY_THRESHOLD ? 'busy' : q > 0 ? 'open' : 'closed',
       zone: s.zone,
     };
   });
@@ -253,7 +286,7 @@ export function generateStadiumData(): StadiumData {
         occupancy: occ,
         capacity: cap,
         queueLength: q,
-        status: occ >= cap ? 'full' : occ > cap * 0.7 ? 'busy' : 'available',
+        status: occ >= cap ? 'full' : occ > cap * WASHROOM_BUSY_FRACTION ? 'busy' : 'available',
       };
     });
   });
@@ -335,7 +368,7 @@ export function generateStadiumData(): StadiumData {
     uvIndex: rand(5, 11),
     heatAdvisory: false,
   };
-  weather.heatAdvisory = weather.temperature > 38 || weather.feelsLike > 42;
+  weather.heatAdvisory = weather.temperature > HEAT_ADVISORY_TEMP || weather.feelsLike > HEAT_ADVISORY_FEELS_LIKE;
 
   // Transport
   const transport: TransportStatus = {
@@ -399,7 +432,10 @@ export function generateStadiumData(): StadiumData {
   return data;
 }
 
-/** Reset the simulation state (useful for tests). */
+/**
+ * Resets all simulation state to initial values.
+ * Useful for testing and scenario switching.
+ */
 export function resetSimulation(): void {
   _prev = null;
   matchMinute = 0;

@@ -9,6 +9,16 @@ import { useEffect, useRef } from 'react';
 import { useStadiumStore } from '@/lib/store/stadium-store';
 import type { StadiumData } from '@/lib/simulation/types';
 
+/**
+ * React hook that subscribes to the SSE simulation stream.
+ *
+ * Opens an `EventSource` connection to `/api/simulation` and
+ * automatically reconnects on error with a 3-second backoff.
+ * Updates the global {@link useStadiumStore} with incoming data.
+ *
+ * @returns An object containing `data` (the latest snapshot)
+ *   and `connected` (whether the SSE stream is active).
+ */
 export function useSimulation() {
   const { setData, setConnected, data, connected } = useStadiumStore();
   const eventSourceRef = useRef<EventSource | null>(null);

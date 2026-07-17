@@ -183,10 +183,46 @@ src/
 
 ---
 
+## 🧪 Testing
+
+The project includes a comprehensive test suite using **Vitest** with **React Testing Library**.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm run test
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+### Test Coverage
+
+| Layer | What's Tested |
+|-------|---------------|
+| **Simulation Engine** | Data generator output, threshold logic, drift evolution, state reset |
+| **Tournament Schedule** | Match data integrity, context generation, bracket structure, helpers |
+| **Scenarios** | Pre-built scenario completeness and uniqueness |
+| **AI Client** | Gemini client singleton, Vertex AI fallback, text/JSON generation |
+| **AI Prompts** | Prompt completeness, keyword coverage, language support |
+| **Zustand Stores** | Stadium store, fan store, accessibility store — all actions and state |
+| **UI Components** | Badge, Button, Card, Gauge, LiveIndicator, Modal, Skeleton, ThemeToggle |
+| **Validation** | Input validation utilities, sanitization, constants |
+
+### Test Architecture
+
+- **Unit tests** for all pure logic modules (simulation, AI, stores, validation)
+- **Component tests** with jsdom for all reusable UI components
+- **ARIA/accessibility assertions** in component tests
+- **Mocked AI client** for testing Gemini integration without API keys
+
+---
+
 ## 🔒 Security
 
 - Security headers (CSP, HSTS, X-Frame-Options)
-- Input validation on all API routes
+- Input validation on all API routes (centralized in `src/lib/utils/validation.ts`)
 - Rate limiting ready
 - Environment variable isolation
 - HTTPS-only in production
