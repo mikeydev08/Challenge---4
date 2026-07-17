@@ -63,7 +63,7 @@ echo "GEMINI_API_KEY=your_key_here" > .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the landing page.
+Open [http://localhost:3000](http://localhost:3000) to run it locally, or view the live demo at [https://challenge-4-delta.vercel.app/](https://challenge-4-delta.vercel.app/).
 
 ### Available Pages
 
