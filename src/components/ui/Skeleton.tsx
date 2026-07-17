@@ -5,12 +5,14 @@ import React from 'react';
 interface SkeletonProps {
   className?: string;
   lines?: number;
+  style?: React.CSSProperties;
 }
 
-export function Skeleton({ className = '' }: SkeletonProps) {
+export function Skeleton({ className = '', style }: SkeletonProps) {
   return (
     <div
       className={`rounded-lg bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 bg-[length:200%_100%] animate-shimmer ${className}`}
+      style={style}
       aria-hidden="true"
     />
   );

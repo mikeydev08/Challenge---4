@@ -4,7 +4,7 @@
    ═══════════════════════════════════════════════════════ */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { generateText } from '@/lib/ai/gemini-client';
+import { generateText, getGeminiClient } from '@/lib/ai/gemini-client';
 import { FAN_COMPANION_PROMPT } from '@/lib/ai/prompts';
 
 export const dynamic = 'force-dynamic';
@@ -44,7 +44,7 @@ Respond naturally and helpfully.`;
     let availableModels = '';
     try {
       const ai = getGeminiClient();
-      const models = await ai.models.listModels();
+      const models = await (ai.models as any).listModels();
       availableModels = (models as any).map?.((m: any) => m.name).join(', ') || 'could not list';
     } catch (e) {
       availableModels = 'failed to fetch models';

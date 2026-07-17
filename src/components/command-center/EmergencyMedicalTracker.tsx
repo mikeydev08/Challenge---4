@@ -61,7 +61,7 @@ export function EmergencyMedicalTracker({ medical }: EmergencyMedicalTrackerProp
               className="rounded-xl border border-red-500/20 bg-black/40 p-3 overflow-hidden relative"
             >
               {/* Status indicator bar */}
-              <div className={`absolute left-0 top-0 bottom-0 w-1 ${incident.severity === 'severe' || incident.severity === 'critical' ? 'bg-red-500 animate-pulse' : 'bg-orange-500'}`} />
+              <div className={`absolute left-0 top-0 bottom-0 w-1 ${incident.severity === 'severe' ? 'bg-red-500 animate-pulse' : 'bg-orange-500'}`} />
               
               <div className="flex items-start justify-between gap-2 pl-2">
                 <div className="flex-1 min-w-0 space-y-2">
